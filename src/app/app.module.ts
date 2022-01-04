@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { AppMaterialModule } from './app-material.module';
 import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { UsersComponent } from './components/users/users.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatFormFieldModule
+    AppMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
