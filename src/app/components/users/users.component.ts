@@ -11,6 +11,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     private unsubscribe = new Subject<void>();
     public users: any;
 
+    columnsToDisplay = ['username', 'email', 'operations'];
+
     constructor(private userService: UsersService) { }
 
     ngOnInit(): void {
