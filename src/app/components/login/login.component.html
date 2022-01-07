@@ -1,8 +1,16 @@
-<p>login works!</p>
-
-<input type="text" name="username" placeholder="Username...">
-<br>
-<input type="password" name="password" placeholder="Password...">
-<br>
-<button type="submit" (click)="login('admin', '123456')">Login</button>
-
+<div class="centered-layout">
+    <form [formGroup]="form">
+        <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <input matInput name="username" formControlName="username">
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput name="password" formControlName="password" type="password">
+        </mat-form-field>
+        <br>
+        <button mat-flat-button color="primary" (click)="login()">Login</button>
+        <button mat-flat-button color="basic" [routerLink]="['/register']">Create account</button>
+    </form>
+</div>

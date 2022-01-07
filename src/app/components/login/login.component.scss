@@ -1,0 +1,14 @@
+.centered-layout {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 10em);
+}
+
+.centered-layout form {
+    align-self: center
+}
+
+form button {
+    width: 100%;
+    margin-bottom: 1em;
+}
