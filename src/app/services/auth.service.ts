@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { LocalStorageService } from './local-storage.service';
 
 export interface Config {
     apiUrl: string;
@@ -12,22 +12,17 @@ export interface Config {
 export class AuthService {
     private authApiUrl = '/api/auth';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private ls: LocalStorageService) { }
 
     login(username: string, password: string) {
         return this.http.post<any>(this.authApiUrl + '/login', { username, password }).pipe(
             data => {
-                localStorage.setItem('token', JSON.stringify(data));
                 return data;
             });
     }
 
-    logout() {
-        localStorage.removeItem('token');
-    }
-
     public get isUserAuthenticated(): boolean {
-        return (localStorage.getItem('token') !== null);
+        return (this.ls.get('token') !== null);
     }
 
     private getServerErrorMessage(error: HttpErrorResponse): string {

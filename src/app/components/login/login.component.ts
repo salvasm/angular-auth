@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { catchError, Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,12 @@ export class LoginComponent implements OnInit {
     private unsubscribe = new Subject<void>();
     public form: FormGroup;
 
-    constructor(private authService: AuthService, private fb: FormBuilder, private router: Router, private _snackBar: MatSnackBar) {
+    constructor(private authService: AuthService,
+                private fb: FormBuilder,
+                private router: Router,
+                private _snackBar: MatSnackBar,
+                private ls: LocalStorageService) {
+                    
         if (authService.isUserAuthenticated) {
             this.router.navigateByUrl('dashboard');
         }
@@ -32,15 +38,16 @@ export class LoginComponent implements OnInit {
         if (formValues.username && formValues.password) {
             this.authService.login(formValues.username, formValues.password).pipe(
                 takeUntil(this.unsubscribe)
-            ).subscribe(data => {
+            ).subscribe(res => {
+                this.ls.set('token', JSON.stringify(res.result))
                 this.openSnackBar('Succesfuly login!', 'Close');
                 this.router.navigateByUrl('dashboard');
-            });
+            }, err => console.log(err));
         }
     }
 
     logout() {
-        this.authService.logout();
+        this.ls.remove('token');
     }
 
     openSnackBar(message: string, action: string) {
